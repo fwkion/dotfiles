@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f59e0b">
+  <title>Help me get home 🐾</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <!-- Landing -->
+    <section id="home" class="card">
+      <img id="photo" class="photo" alt="Photo of the dog" hidden>
+      <div id="paw" class="paw" aria-hidden="true">🐶</div>
+      <h1>Hi! You've scanned my tag.</h1>
+      <p class="lead">
+        If I'm out on my own, I'm probably lost and my family is worried sick.
+        Please help me get home!
+      </p>
+
+      <button id="found-btn" class="btn btn-primary btn-big" type="button">🐾 I've found this dog</button>
+
+      <div id="contact-direct" class="contact" hidden>
+        <p>Or contact my family directly:</p>
+        <div class="row">
+          <a id="call-link" class="btn btn-secondary" href="#">📞 Call</a>
+          <a id="whatsapp-link" class="btn btn-secondary" href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
+        </div>
+      </div>
+
+      <div id="loc-banner" class="banner" hidden>
+        <p id="loc-banner-text">📍 Sharing your location lets my family know where I am, even if you don't fill anything in.</p>
+        <button id="loc-btn" class="btn btn-secondary" type="button">Share my location</button>
+      </div>
+      <p id="loc-status" class="status" role="status" aria-live="polite"></p>
+
+      <p class="muted small">Not lost? I'm probably just out for a walk. Thanks for saying hello! 👋</p>
+    </section>
+
+    <!-- Found form -->
+    <form id="found-form" class="card" hidden novalidate>
+      <button type="button" class="link back" data-back>← Back</button>
+      <h2>Thank you so much! 💛</h2>
+      <p class="lead">Just a few quick details so my family can come and get me. Everything is optional, but a phone number helps the most.</p>
+
+      <fieldset>
+        <legend>1. Where are you right now?</legend>
+        <button id="here-gps" type="button" class="btn btn-secondary">📍 Use my current location</button>
+        <p class="hint">…or tap the map / drag the pin.</p>
+        <div id="map-here" class="map" role="application" aria-label="Map: where you are now"></div>
+        <p id="here-coords" class="coords"></p>
+        <label class="w3w">
+          <span>Or a <a href="https://what3words.com" target="_blank" rel="noopener">what3words</a> address</span>
+          <span class="w3w-input"><span aria-hidden="true">///</span><input id="here-w3w" name="currentW3W" placeholder="filled.count.soap" autocomplete="off" autocapitalize="none" spellcheck="false"></span>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Where did you find me?</legend>
+        <label class="check">
+          <input id="same-place" type="checkbox" checked>
+          <span>Right here, where I am now</span>
+        </label>
+        <div id="found-elsewhere" hidden>
+          <p class="hint">Tap the map / drag the pin to where you found me.</p>
+          <div id="map-found" class="map" role="application" aria-label="Map: where you found the dog"></div>
+          <p id="found-coords" class="coords"></p>
+          <label class="w3w">
+            <span>Or a what3words address</span>
+            <span class="w3w-input"><span aria-hidden="true">///</span><input id="found-w3w" name="foundW3W" placeholder="index.home.raft" autocomplete="off" autocapitalize="none" spellcheck="false"></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. How can my family reach you?</legend>
+        <label>
+          <span>Phone number</span>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+44 7…">
+        </label>
+        <label>
+          <span>Your name</span>
+          <input id="name" name="name" autocomplete="name" placeholder="First name is fine">
+        </label>
+        <label>
+          <span>Anything else? (Is he OK? Are you staying put?)</span>
+          <textarea id="message" name="message" rows="3" placeholder="e.g. He's with me at the café, I'll wait here for 30 min"></textarea>
+        </label>
+      </fieldset>
+
+      <p id="form-error" class="error" role="alert" hidden></p>
+      <button id="submit-btn" class="btn btn-primary btn-big" type="submit">Let my family know</button>
+      <p class="muted small">Your details are only sent to my family.</p>
+    </form>
+
+    <!-- Thank you -->
+    <section id="thanks" class="card" hidden>
+      <div class="paw" aria-hidden="true">🥰</div>
+      <h2>My family has been notified!</h2>
+      <p class="lead">They'll be in touch as soon as possible. If you can, please keep me safe nearby until then. Thank you for being so kind.</p>
+      <div id="thanks-contact" class="contact" hidden>
+        <p>You can also reach them directly:</p>
+        <div class="row">
+          <a id="thanks-call" class="btn btn-secondary" href="#">📞 Call</a>
+          <a id="thanks-whatsapp" class="btn btn-secondary" href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
+        </div>
+      </div>
+      <button type="button" class="link" data-back>Update the details</button>
+    </section>
+  </main>
+
+  <footer class="muted small">
+    This page records each visit (device and browser details, IP address and approximate location, plus precise
+    location if you allow it) and sends it to my owners so they can find me if I'm lost. It isn't shared with anyone else.
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="fingerprint.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

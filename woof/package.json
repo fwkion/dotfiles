@@ -1,0 +1,12 @@
+{
+  "name": "woof",
+  "private": true,
+  "description": "QR dog-tag page: records every visit, lets a finder report where the dog is, and pings the owners on Telegram.",
+  "scripts": {
+    "dev": "node dev/server.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
