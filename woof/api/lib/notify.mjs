@@ -19,7 +19,18 @@ function config() {
   };
 }
 
-async function call(method, params, { fetchImpl = fetch } = {}) {
+// Where messages go. Replaceable (setTransport) so the in-browser test
+// console can show them instead of sending them.
+let transport = telegram;
+export function setTransport(fn) {
+  transport = fn || telegram;
+}
+
+function call(method, params, opts) {
+  return Promise.resolve(transport(method, params, opts)).catch((err) => console.error(err));
+}
+
+async function telegram(method, params, { fetchImpl = fetch } = {}) {
   const { token, chats } = config();
   if (!token || chats.length === 0) {
     console.log(`[notify:${method}]`, method === 'sendMessage' ? `\n${params.text}\n` : JSON.stringify(params));

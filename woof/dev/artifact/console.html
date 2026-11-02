@@ -1,0 +1,55 @@
+<button id="tc-jump" type="button">Test console ↓</button>
+<aside id="tc" aria-label="Test console">
+  <div class="tc-head">
+    <h2>Test console</h2>
+    <p>The visitor page is exactly what someone who scans the tag sees. It runs the real app and API code. Notifications that would go to Telegram appear here instead.</p>
+    <p id="tc-storage"></p>
+  </div>
+
+  <section class="tc-section">
+    <h3>Visitor's location prompt</h3>
+    <div id="tc-geo" class="tc-card" data-state="idle">
+      <p id="tc-geo-status"></p>
+      <div class="tc-fields">
+        <label for="tc-lat">Latitude<input id="tc-lat" inputmode="decimal" value="51.5033"></label>
+        <label for="tc-lon">Longitude<input id="tc-lon" inputmode="decimal" value="-0.1196"></label>
+        <label for="tc-acc">± metres<input id="tc-acc" inputmode="numeric" value="25"></label>
+      </div>
+      <div class="tc-row">
+        <button id="tc-allow" class="tc-primary" type="button">Allow</button>
+        <button id="tc-deny" type="button">Block</button>
+        <button id="tc-move" type="button" hidden>Send a more accurate fix</button>
+        <button id="tc-reload" type="button">New visit (reload)</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="tc-section">
+    <h3>Your phone (Telegram)</h3>
+    <p id="tc-feed-note"></p>
+    <div id="tc-feed" aria-live="polite"></div>
+  </section>
+
+  <section class="tc-section">
+    <h3>Stored records</h3>
+    <details>
+      <summary>Latest visit</summary>
+      <pre id="tc-record"></pre>
+    </details>
+    <details>
+      <summary>Latest found claim</summary>
+      <pre id="tc-claim"></pre>
+    </details>
+    <div class="tc-row"><button id="tc-clear" type="button">Clear test data</button></div>
+  </section>
+
+  <section class="tc-section">
+    <h3>Different here than on woof.fwkion.com</h3>
+    <ul class="tc-limits">
+      <li>Map tiles don't load in this sandbox, so the maps are blank. Tapping and dragging pins still works.</li>
+      <li>The browser's location prompt is replaced by the panel above.</li>
+      <li>IP address and city are simulated (203.0.113.42, London). WebRTC IP discovery is blocked.</li>
+      <li>No real Telegram messages are sent.</li>
+    </ul>
+  </section>
+</aside>

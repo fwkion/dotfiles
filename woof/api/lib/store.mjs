@@ -4,8 +4,6 @@
 // DynamoDB table: partition key "id" (String), no sort key.
 // Item types: "visit" (one per page load) and "found" (one per claim).
 
-import { readFile, writeFile } from 'node:fs/promises';
-
 let store;
 
 export function getStore() {
@@ -66,6 +64,11 @@ function dynamoStore(TableName) {
 }
 
 function fileStore(path) {
+  // node:fs is imported lazily so this module also loads in a browser
+  // (the artifact test console swaps in its own store).
+  const fs = import('node:fs/promises');
+  const readFile = async (...a) => (await fs).readFile(...a);
+  const writeFile = async (...a) => (await fs).writeFile(...a);
   // Serialise writes so concurrent requests don't clobber each other.
   let chain = Promise.resolve();
   const load = async () => {

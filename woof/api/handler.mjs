@@ -8,7 +8,6 @@
 // The "/api" prefix is optional so the function works both behind a CloudFront
 // "/api/*" behaviour and on its own domain.
 
-import { randomUUID } from 'node:crypto';
 import { getStore } from './lib/store.mjs';
 import { serverContext, approxLocation } from './lib/context.mjs';
 import { sanitize, text, point, what3words, isId } from './lib/validate.mjs';
@@ -41,7 +40,7 @@ async function visit(event) {
   const body = parseBody(event);
   const now = new Date().toISOString();
   const item = {
-    id: randomUUID(),
+    id: crypto.randomUUID(),
     type: 'visit',
     createdAt: now,
     server: await serverContext(event),
@@ -79,7 +78,7 @@ async function found(event) {
   const foundSameAsCurrent = body.foundSameAsCurrent !== false;
 
   const item = {
-    id: randomUUID(),
+    id: crypto.randomUUID(),
     type: 'found',
     createdAt: now,
     visitId: isId(body.visitId) ? body.visitId : undefined,

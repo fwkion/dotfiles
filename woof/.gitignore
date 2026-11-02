@@ -1,3 +1,4 @@
 dev/data.json
 node_modules/
 *.zip
+dev/artifact/index.html
